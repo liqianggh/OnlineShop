@@ -179,7 +179,7 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public ServerResponse<User> updateInformation(User user) {
-        //用户名不能更改，还要对email进行校验（不包含自己）
+        // 用户名不能更改，还要对email进行校验（不包含自己）
         int resultCount = userMapper.checkEmailByUserId(user.getEmail(),user.getId());
         if(resultCount>0){
             return ServerResponse.createByErrorMessage("邮箱已存在，请更换后再试！");
@@ -209,6 +209,18 @@ public class UserServiceImpl implements IUserService{
         user.setPassword(StringUtils.EMPTY);
 
         return ServerResponse.createBySuccess(user);
+    }
+
+
+    //backend
+    @Override
+    public   ServerResponse checkAdminRole(User user){
+        if(user!=null&&user.getRole().intValue()==1){
+            return ServerResponse.createBySuccess();
+        }else{
+            return ServerResponse.createByError();
+        }
+
     }
 
 

@@ -30,8 +30,8 @@
       status, sort_order, create_time, 
       update_time)
     values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{status,jdbcType=BIT}, #{sortOrder,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{status,jdbcType=BIT}, #{sortOrder,jdbcType=INTEGER}, now(),
+      now())
   </insert>
   <insert id="insertSelective" parameterType="com.mmall.pojo.Category" >
     insert into mmall_category
@@ -77,9 +77,10 @@
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
+      <!--<if test="updateTime != null" >-->
+        <!--#{updateTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      now(),
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.mmall.pojo.Category" >
@@ -100,10 +101,14 @@
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <!--选择更新
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      -->
+      update_time = now(),
     </set>
+
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mmall.pojo.Category" >
@@ -113,7 +118,15 @@
       status = #{status,jdbcType=BIT},
       sort_order = #{sortOrder,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectCategoryChildrenByParentId" resultMap="BaseResultMap" parameterType="int">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_category
+    where parent_id=#{parent_id}
+
+  </select>
 </mapper>

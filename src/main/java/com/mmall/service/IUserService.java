@@ -1,8 +1,11 @@
 package com.mmall.service;
 
 import com.mmall.common.ServerResponse;
+import com.mmall.pojo.Category;
 import com.mmall.pojo.User;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/1 0001.
@@ -27,6 +30,8 @@ public interface IUserService {
     ServerResponse<User> updateInformation(User user);
 
     ServerResponse<User> getInformation(Integer userId);
+
+    ServerResponse checkAdminRole(User user);
 
 
 }

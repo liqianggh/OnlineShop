@@ -50,6 +50,7 @@ public class ProductManageController {
     @RequestMapping("save.do")
     @ResponseBody
     public ServerResponse productSave(HttpSession session, Product product) {
+
         //强制登陆
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
@@ -208,8 +209,11 @@ public class ProductManageController {
         }
         //富文本对上传返回值有要求 ，我们使用的是simditor所以按照其要求返回
         if (iUserService.checkAdminRole(user).isSuccess()) {
-            String path = request.getSession().getServletContext().getRealPath("upload");
+//            String path = request.getSession().getServletContext().getRealPath("upload");
+            String path = this.getClass().getResource("/").getPath();
+            ServletContext context = session.getServletContext();
             String targetFileName = iFileService.upload(file, path);
+
             if(StringUtils.isBlank(targetFileName)){
                 resultMap.put("success",false);
                 resultMap.put("msg","上传失败");

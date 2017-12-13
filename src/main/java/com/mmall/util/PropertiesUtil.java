@@ -37,7 +37,7 @@ public class PropertiesUtil {
     }
 
     public static String getProperty(String key,String defaultValue){
-        String value = getProperty(key.trim());
+        String value = props.getProperty(key.trim());
 
         if(org.apache.commons.lang.StringUtils.isBlank(value)){
             value = defaultValue;

@@ -34,7 +34,6 @@ public class ServerResponse<T> implements Serializable{
         this.msg=msg;
     }
 
-
     //序列化之后忽略
     @JsonIgnore
     public  boolean isSuccess(){

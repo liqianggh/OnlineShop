@@ -20,6 +20,7 @@ import com.alipay.demo.trade.service.impl.AlipayMonitorServiceImpl;
 import com.alipay.demo.trade.service.impl.AlipayTradeServiceImpl;
 import com.alipay.demo.trade.service.impl.AlipayTradeWithHBServiceImpl;
 import com.alipay.demo.trade.utils.Utils;
+import com.mmall.util.PropertiesUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -419,7 +420,7 @@ public class Main {
             .setUndiscountableAmount(undiscountableAmount).setSellerId(sellerId).setBody(body)
             .setOperatorId(operatorId).setStoreId(storeId).setExtendParams(extendParams)
             .setTimeoutExpress(timeoutExpress)
-            //                .setNotifyUrl("http://www.test-notify-url.com")//支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
+                            .setNotifyUrl("http://6y66xx.natappfree.cc/order/alipay_callback.do")//支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
             .setGoodsDetailList(goodsDetailList);
 
         AlipayF2FPrecreateResult result = tradeService.tradePrecreate(builder);

@@ -107,19 +107,16 @@ public class OrderServiceImpl implements IOrderService {
 
         // 商品明细列表，需填写购买商品详细信息，
         List<GoodsDetail> goodsDetailList = new ArrayList<GoodsDetail>();
-        // 创建一个商品信息，参数含义分别为商品id（使用国标）、名称、单价（单位为分）、数量，如果需要添加商品类别，详见GoodsDetail
-        List<OrderItem> orderItemList = orderItemMapper.getByOrderNoUserId(orderNo, userId);
 
-        for (OrderItem item : orderItemList) {
-            GoodsDetail goods = GoodsDetail.newInstance(item.getProductId().toString(), item.getProductName(),
-
-                    BigDecimalUtil.mul(item.getCurrentUnitPrice().doubleValue(), new Double(100).doubleValue()).longValue(), item.getQuantity());
+        List<OrderItem> orderItemList = orderItemMapper.getByOrderNoUserId(orderNo,userId);
+        for(OrderItem orderItem : orderItemList){
+            GoodsDetail goods = GoodsDetail.newInstance(orderItem.getProductId().toString(), orderItem.getProductName(),
+                    BigDecimalUtil.mul(orderItem.getCurrentUnitPrice().doubleValue(),new Double(100).doubleValue()).longValue(),
+                    orderItem.getQuantity());
             goodsDetailList.add(goods);
         }
-
         //String appAuthToken = "应用授权令牌";//根据真实值填写
-
-        // 创建条码支付请求builder，设置请求参数
+        // 创建扫码支付请求builder，设置请求参数
         AlipayTradePrecreateRequestBuilder builder = new AlipayTradePrecreateRequestBuilder()
                 .setSubject(subject).setTotalAmount(totalAmount).setOutTradeNo(outTradeNo)
                 .setUndiscountableAmount(undiscountableAmount).setSellerId(sellerId).setBody(body)
@@ -139,7 +136,7 @@ public class OrderServiceImpl implements IOrderService {
          */
         AlipayTradeService tradeService = new AlipayTradeServiceImpl.ClientBuilder().build();
 
-
+log.info("j"+builder.getNotifyUrl()+"j");
         // 调用tradePay方法获取当面付应答
         AlipayF2FPrecreateResult result = tradeService.tradePrecreate(builder);
 
@@ -159,7 +156,7 @@ public class OrderServiceImpl implements IOrderService {
 
 
                 // 需要修改为运行机器上的路径
-                String qrPath = String.format(path + "/" + "qr-%s.png", response.getOutTradeNo());
+                String qrPath = String.format(path  + "qr-%s.png", response.getOutTradeNo());
                 String qrFileName = String.format("qr-%s.png", response.getOutTradeNo());
                 ZxingUtils.getQRCodeImge(response.getQrCode(), 256, qrPath);
 

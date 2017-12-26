@@ -9,6 +9,9 @@ import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.service.IOrderService;
+import com.mmall.util.DateTimeUtil;
+import org.apache.commons.lang.time.DateUtils;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -46,6 +50,8 @@ public class OrderController {
         return iOrderService.pay(orderNo, user.getId(), path);
     }
 
+    @RequestMapping("alipay_callback.do")
+    @ResponseBody
     public Object alipayCallback(HttpServletRequest request ){
         Map requeestParams = request.getParameterMap();
         Map<String,String> params = Maps.newHashMap();
@@ -72,7 +78,17 @@ public class OrderController {
         } catch (AlipayApiException e) {
             logger.error("支付宝验证异常：",e);
         }
-        //todo 验证各种数据
+        //todo 验证支付宝返回的各种数据
+        String tradeStatus = params.get("trade_status");
+        //订单号
+        String orderNo = params.get("out_trade_no");
+        String sbuject = params.get("subject");
+        String body = params.get("body");
+        //交易号
+        String plutfromNum = params.get("trade_no");
+        //回调时间
+        Date notifyTime = DateTimeUtil.strToDate(params.get("notify_time"));
+
 
         //
         ServerResponse serverResponse = iOrderService.aliCallback(params);

@@ -10,6 +10,7 @@ import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.service.IOrderService;
 import com.mmall.util.DateTimeUtil;
+import com.mmall.vo.OrderVo;
 import org.apache.commons.lang.time.DateUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -35,6 +36,39 @@ public class OrderController {
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
     @Autowired
     private IOrderService iOrderService;
+
+    //创建订单
+    @RequestMapping("create.do")
+    @ResponseBody
+    public ServerResponse create(HttpSession session, Integer shippingId) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+        //返回给前端数据
+        return  iOrderService.createOrder(user.getId(),shippingId);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @RequestMapping("pay.do")
     @ResponseBody

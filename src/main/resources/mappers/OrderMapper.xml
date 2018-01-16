@@ -212,4 +212,5 @@
     from mmall_order
     where order_no=#{orderNo}
   </select>
+
 </mapper>

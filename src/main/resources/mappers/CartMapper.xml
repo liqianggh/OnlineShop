@@ -173,6 +173,9 @@
         from mmall_cart
         where user_id=#{userId}
     </select>
-
-
+    <select id="selectCheckedCartByUserId" parameterType="int" resultType="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        where user_id=#{userId}
+    </select>
 </mapper>

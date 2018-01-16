@@ -147,7 +147,7 @@ log.info("j"+builder.getNotifyUrl()+"j");
                 AlipayTradePrecreateResponse response = result.getResponse();
                 dumpResponse(response);
                 //把二维码传入文件服务器
-
+log.info("上传文件11111");
                 File folder = new File(path);
                 if (!folder.exists()) {
                     folder.setWritable(true);
@@ -162,7 +162,10 @@ log.info("j"+builder.getNotifyUrl()+"j");
 
                 File targetFile = new File(path, qrFileName);
                 try {
+log.info(targetFile+"哈哈哈");
+log.info(path+"223333");
                     FTPUtil.uploadFile(Lists.newArrayList(targetFile));
+log.info("上传文件22222");
                 } catch (IOException e) {
                     log.error("上传二维码异常", e);
                     e.printStackTrace();

@@ -42,8 +42,9 @@ public class FTPUtil {
     public static boolean uploadFile(List<File> fileList) throws IOException {
         FTPUtil ftpUtil = new FTPUtil(ftpIp,21,ftpUser,ftpPass);
         logger.info("开始连接服务器");
+        logger.info(fileList.size()+"哈哈哈");
         boolean result = ftpUtil.uploadFile("img",fileList);
-        logger.info("开始链接ftp服务器，结束上穿，上传结果{}",result);
+        logger.info("开始链接ftp服务器，结束上传，上传结果{}",result);
         return result;
     }
 
@@ -87,6 +88,7 @@ public class FTPUtil {
         try {
             ftpClient.connect(ip);
             isSuccess = ftpClient.login(user,password);
+            logger.info("连接文件服务器"+isSuccess);
         } catch (IOException e) {
             logger.error("链接ftp服务器异常",e);
         }

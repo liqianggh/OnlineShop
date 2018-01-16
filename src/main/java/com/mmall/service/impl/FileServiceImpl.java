@@ -41,10 +41,13 @@ public class FileServiceImpl  implements IFileService{
         try {
             file.transferTo(targetFile);
             //文件上传成功了
-            FTPUtil.uploadFile(Lists.newArrayList(targetFile));
+           boolean result =  FTPUtil.uploadFile(Lists.newArrayList(targetFile));
             //已经上传到服务器
+logger.info("文件上传结果？？？"+result);
             //上传成功后删除本地文件
-            targetFile.delete();
+            if(result){
+                targetFile.delete();
+            }
         }catch (IOException e) {
             logger.error("上传文件异常",e);
             return null;

@@ -53,7 +53,7 @@ public class FTPUtil {
      * @return
      */
     private boolean uploadFile(String remotePath,List<File> fileList) throws IOException {
-        boolean uploaded = true;
+        boolean uploaded = false;
         FileInputStream fis = null;
 
         //连接ftp服务器
@@ -67,8 +67,15 @@ public class FTPUtil {
                 ftpClient.enterLocalPassiveMode();
                 for(File fileItem : fileList){
                     fis = new FileInputStream(fileItem);
-                    boolean flag = ftpClient.storeFile(fileItem.getName(),fis);
-logger.info("fptUtil中的"+flag);
+                    logger.info(fileItem.getName()+" "+fis.getChannel());
+                    //todo
+                    ftpClient.enterLocalPassiveMode();
+                    logger.info("端口"+ftpClient.getPassivePort());
+                    logger.info(ftpClient.getPassiveHost());
+                    logger.info(String.valueOf(ftpClient.getRemoteAddress()));
+                    logger.info(String.valueOf(ftpClient.getRemotePort()));
+                    uploaded = ftpClient.storeFile(fileItem.getName(),fis);
+
                 }
             } catch (IOException e) {
                 logger.error("上传文件异常",e);

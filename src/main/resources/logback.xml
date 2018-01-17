@@ -11,11 +11,12 @@
     </appender>
 
     <!--日志地址-->
-    <appender name="mmall" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="OnlineShop" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--<File>d:/mmalllog/mmall.log</File>-->
-        <File>D:/develop/logs/mmall.log</File>
+        <!--<File>D:/develop/logs/mmall.log</File>-->
+        <File>/develop/logs/OnlineShop.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>D:/develop/logs/mmall.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>/develop/logs/OnlineShop.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <append>true</append>
             <maxHistory>10</maxHistory>
         </rollingPolicy>
@@ -26,10 +27,10 @@
 
 
     <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!--<File>d:/mmalllog/error.log</File>-->
-        <File>D:/develop/logs/error.log</File>
+        <!--<File>d:/develop/error.log</File>-->
+        <File>/develop/logs/error.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>D:/develop/logs/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>/develop/logs/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <!--<fileNamePattern>d:/mmalllog/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>-->
             <append>true</append>
             <maxHistory>10</maxHistory>
@@ -44,8 +45,8 @@
         </filter>
     </appender>
 
-    <logger name="com.mmall" additivity="false" level="INFO" >
-        <appender-ref ref="mmall" />
+    <logger name="com.OnlineShop" additivity="false" level="INFO" >
+        <appender-ref ref="OnlineShop" />
         <appender-ref ref="console"/>
     </logger>
 
@@ -53,7 +54,7 @@
 
     <!-- geelynote mybatis log 日志  可以通过日志查看sql语句 -->
 
-    <logger name="com.mmall.dao" level="DEBUG"/>
+    <logger name="com.OnlineShop.dao" level="DEBUG"/>
 
     <!--<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" >-->
         <!--<appender-ref ref="console"/>-->

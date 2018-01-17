@@ -1,9 +1,9 @@
-package com.mmall.service;
+package com.OnlineShop.service;
 
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.pojo.Product;
+import com.OnlineShop.vo.ProductDetailVo;
 import com.github.pagehelper.PageInfo;
-import com.mmall.common.ServerResponse;
-import com.mmall.pojo.Product;
-import com.mmall.vo.ProductDetailVo;
 
 /**
  * Created by Administrator on 2017/12/6 0006.

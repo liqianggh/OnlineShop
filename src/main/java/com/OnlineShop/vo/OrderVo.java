@@ -1,7 +1,6 @@
-package com.mmall.vo;
+package com.OnlineShop.vo;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 public class OrderVo {

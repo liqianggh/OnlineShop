@@ -1,9 +1,8 @@
-package com.mmall.service;
+package com.OnlineShop.service;
 
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.vo.OrderVo;
 import com.github.pagehelper.PageInfo;
-import com.mmall.common.ServerResponse;
-import com.mmall.vo.OrderVo;
-import net.sf.jsqlparser.schema.Server;
 
 import java.util.Map;
 

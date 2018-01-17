@@ -1,6 +1,6 @@
-package com.mmall.dao;
+package com.OnlineShop.dao;
 
-import com.mmall.pojo.Category;
+import com.OnlineShop.pojo.Category;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,6 +1,5 @@
-package com.mmall.util;
+package com.OnlineShop.util;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

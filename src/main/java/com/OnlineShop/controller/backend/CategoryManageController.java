@@ -1,12 +1,11 @@
-package com.mmall.controller.backend;
+package com.OnlineShop.controller.backend;
 
-import com.mmall.common.Const;
-import com.mmall.common.ResponseCode;
-import com.mmall.common.ServerResponse;
-import com.mmall.pojo.User;
-import com.mmall.service.ICategoryService;
-import com.mmall.service.IUserService;
-import org.apache.ibatis.annotations.Param;
+import com.OnlineShop.common.Const;
+import com.OnlineShop.common.ResponseCode;
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.pojo.User;
+import com.OnlineShop.service.ICategoryService;
+import com.OnlineShop.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

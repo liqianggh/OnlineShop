@@ -1,11 +1,8 @@
-package com.mmall.service;
+package com.OnlineShop.service;
 
-import com.mmall.common.ServerResponse;
-import com.mmall.pojo.Category;
-import com.mmall.pojo.User;
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.pojo.User;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/1 0001.

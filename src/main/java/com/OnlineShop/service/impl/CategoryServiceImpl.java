@@ -1,11 +1,11 @@
-package com.mmall.service.impl;
+package com.OnlineShop.service.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.mmall.common.ServerResponse;
-import com.mmall.dao.CategoryMapper;
-import com.mmall.pojo.Category;
-import com.mmall.service.ICategoryService;
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.dao.CategoryMapper;
+import com.OnlineShop.pojo.Category;
+import com.OnlineShop.service.ICategoryService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Set;
 
-import static com.mmall.common.ServerResponse.createByErrorMessage;
+import static com.OnlineShop.common.ServerResponse.createByErrorMessage;
 
 /**
  * Created by Administrator on 2017/12/2 0002.

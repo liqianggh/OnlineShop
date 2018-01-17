@@ -1,4 +1,4 @@
-package com.mmall.vo;
+package com.OnlineShop.vo;
 
 public class ShippingVo {
     private String receiverName;

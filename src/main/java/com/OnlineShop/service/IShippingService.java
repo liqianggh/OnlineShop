@@ -1,8 +1,8 @@
-package com.mmall.service;
+package com.OnlineShop.service;
 
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.pojo.Shipping;
 import com.github.pagehelper.PageInfo;
-import com.mmall.common.ServerResponse;
-import com.mmall.pojo.Shipping;
 
 import java.util.Map;
 

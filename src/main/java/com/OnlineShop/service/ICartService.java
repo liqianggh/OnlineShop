@@ -1,7 +1,7 @@
-package com.mmall.service;
+package com.OnlineShop.service;
 
-import com.mmall.common.ServerResponse;
-import com.mmall.vo.CartVo;
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.vo.CartVo;
 
 /**
  * Created by Administrator on 2017/12/13 0013.

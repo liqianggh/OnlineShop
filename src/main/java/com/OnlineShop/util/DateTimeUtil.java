@@ -1,4 +1,4 @@
-package com.mmall.util;
+package com.OnlineShop.util;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;

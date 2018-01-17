@@ -1,21 +1,21 @@
-package com.mmall.service.impl;
+package com.OnlineShop.service.impl;
 
+import com.OnlineShop.common.Const;
+import com.OnlineShop.common.ResponseCode;
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.dao.CategoryMapper;
+import com.OnlineShop.dao.ProductMapper;
+import com.OnlineShop.pojo.Category;
+import com.OnlineShop.pojo.Product;
+import com.OnlineShop.service.ICategoryService;
+import com.OnlineShop.service.IProductService;
+import com.OnlineShop.util.DateTimeUtil;
+import com.OnlineShop.util.PropertiesUtil;
+import com.OnlineShop.vo.ProductDetailVo;
+import com.OnlineShop.vo.ProductListVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
-import com.mmall.common.Const;
-import com.mmall.common.ResponseCode;
-import com.mmall.common.ServerResponse;
-import com.mmall.dao.CategoryMapper;
-import com.mmall.dao.ProductMapper;
-import com.mmall.pojo.Category;
-import com.mmall.pojo.Product;
-import com.mmall.service.ICategoryService;
-import com.mmall.service.IProductService;
-import com.mmall.util.DateTimeUtil;
-import com.mmall.util.PropertiesUtil;
-import com.mmall.vo.ProductDetailVo;
-import com.mmall.vo.ProductListVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ import java.util.List;
  * Created by Administrator on 2017/12/6 0006.
  */
 @Service("iProductService")
-public class ProductServiceImpl  implements IProductService{
+public class ProductServiceImpl  implements IProductService {
 
     @Autowired
     private ProductMapper productMapper;

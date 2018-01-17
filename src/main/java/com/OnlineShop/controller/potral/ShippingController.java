@@ -1,12 +1,12 @@
-package com.mmall.controller.potral;
+package com.OnlineShop.controller.potral;
 
 import com.github.pagehelper.PageInfo;
-import com.mmall.common.Const;
-import com.mmall.common.ResponseCode;
-import com.mmall.common.ServerResponse;
-import com.mmall.pojo.Shipping;
-import com.mmall.pojo.User;
-import com.mmall.service.IShippingService;
+import com.OnlineShop.common.Const;
+import com.OnlineShop.common.ResponseCode;
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.pojo.Shipping;
+import com.OnlineShop.pojo.User;
+import com.OnlineShop.service.IShippingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

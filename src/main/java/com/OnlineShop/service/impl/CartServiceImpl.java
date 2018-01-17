@@ -1,19 +1,19 @@
-package com.mmall.service.impl;
+package com.OnlineShop.service.impl;
 
+import com.OnlineShop.common.Const;
+import com.OnlineShop.common.ResponseCode;
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.dao.CartMapper;
+import com.OnlineShop.dao.ProductMapper;
+import com.OnlineShop.pojo.Cart;
+import com.OnlineShop.pojo.Product;
+import com.OnlineShop.service.ICartService;
+import com.OnlineShop.util.BigDecimalUtil;
+import com.OnlineShop.util.PropertiesUtil;
+import com.OnlineShop.vo.CartProductVo;
+import com.OnlineShop.vo.CartVo;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
-import com.mmall.common.Const;
-import com.mmall.common.ResponseCode;
-import com.mmall.common.ServerResponse;
-import com.mmall.dao.CartMapper;
-import com.mmall.dao.ProductMapper;
-import com.mmall.pojo.Cart;
-import com.mmall.pojo.Product;
-import com.mmall.service.ICartService;
-import com.mmall.util.BigDecimalUtil;
-import com.mmall.util.PropertiesUtil;
-import com.mmall.vo.CartProductVo;
-import com.mmall.vo.CartVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Created by Administrator on 2017/12/13 0013.
@@ -34,7 +33,7 @@ public class CartServiceImpl implements ICartService {
     private ProductMapper productMapper;
     @Autowired
     private CartMapper cartMapper;
-    public ServerResponse<CartVo> add(Integer userId,Integer productId,Integer count){
+    public ServerResponse<CartVo> add(Integer userId, Integer productId, Integer count){
         Cart cart = cartMapper.selectCarByUserIdProductId(userId,productId);
         //todo 检验商品是否存在
         if(cart==null){
@@ -61,7 +60,7 @@ public class CartServiceImpl implements ICartService {
 
 
     //更新购物车项
-    public ServerResponse<CartVo> update(Integer userId,Integer productId,Integer count){
+    public ServerResponse<CartVo> update(Integer userId, Integer productId, Integer count){
         Cart cart = cartMapper.selectCarByUserIdProductId(userId,productId);
         if(cart!=null){
             cart.setQuantity(count);

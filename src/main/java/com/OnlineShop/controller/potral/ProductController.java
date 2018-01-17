@@ -1,9 +1,9 @@
-package com.mmall.controller.potral;
+package com.OnlineShop.controller.potral;
 
 import com.github.pagehelper.PageInfo;
-import com.mmall.common.ServerResponse;
-import com.mmall.service.IProductService;
-import com.mmall.vo.ProductDetailVo;
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.service.IProductService;
+import com.OnlineShop.vo.ProductDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

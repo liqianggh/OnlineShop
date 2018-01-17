@@ -1,7 +1,7 @@
-package com.mmall.service;
+package com.OnlineShop.service;
 
-import com.mmall.common.ServerResponse;
-import com.mmall.pojo.Category;
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.pojo.Category;
 
 import java.util.List;
 

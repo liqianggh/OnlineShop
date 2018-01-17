@@ -1,8 +1,8 @@
-package com.mmall.service.impl;
+package com.OnlineShop.service.impl;
 
+import com.OnlineShop.service.IFileService;
+import com.OnlineShop.util.FTPUtil;
 import com.google.common.collect.Lists;
-import com.mmall.service.IFileService;
-import com.mmall.util.FTPUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.UUID;
  * Created by Administrator on 2017/12/8 0008.
  */
 @Service("iFileService")
-public class FileServiceImpl  implements IFileService{
+public class FileServiceImpl  implements IFileService {
 
 
     private Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);

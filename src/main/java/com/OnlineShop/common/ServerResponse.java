@@ -1,4 +1,4 @@
-package com.mmall.common;
+package com.OnlineShop.common;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;

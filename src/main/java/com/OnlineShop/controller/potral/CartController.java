@@ -1,11 +1,11 @@
-package com.mmall.controller.potral;
+package com.OnlineShop.controller.potral;
 
-import com.mmall.common.Const;
-import com.mmall.common.ResponseCode;
-import com.mmall.common.ServerResponse;
-import com.mmall.pojo.User;
-import com.mmall.service.ICartService;
-import com.mmall.vo.CartVo;
+import com.OnlineShop.common.Const;
+import com.OnlineShop.common.ResponseCode;
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.pojo.User;
+import com.OnlineShop.service.ICartService;
+import com.OnlineShop.vo.CartVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

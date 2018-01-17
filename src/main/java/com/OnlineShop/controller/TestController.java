@@ -1,6 +1,6 @@
-package com.mmall.controller;
+package com.OnlineShop.controller;
 
-import com.mmall.dao.UserMapper;
+import com.OnlineShop.dao.UserMapper;
 import org.apache.commons.net.ntp.TimeStamp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

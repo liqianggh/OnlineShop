@@ -1,12 +1,12 @@
-package com.mmall.service.impl;
+package com.OnlineShop.service.impl;
 
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.dao.ShippingMapper;
+import com.OnlineShop.pojo.Shipping;
+import com.OnlineShop.service.IShippingService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
-import com.mmall.common.ServerResponse;
-import com.mmall.dao.ShippingMapper;
-import com.mmall.pojo.Shipping;
-import com.mmall.service.IShippingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +17,12 @@ import java.util.Map;
  * Created by Administrator on 2017/12/14 0014.
  */
 @Service("iShippingService")
-public class ShippintServiceImpl implements IShippingService{
+public class ShippintServiceImpl implements IShippingService {
 
     @Autowired
     private ShippingMapper shippingMapper;
 
-    public ServerResponse<Map> add(Integer userId,Shipping shipping){
+    public ServerResponse<Map> add(Integer userId, Shipping shipping){
         shipping.setUserId(userId);
         //插入并且获取主键
         int rowCount = shippingMapper.insert(shipping);

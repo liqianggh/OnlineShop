@@ -1,4 +1,4 @@
-package com.mmall.util;
+package com.OnlineShop.util;
 
 import java.math.BigDecimal;
 

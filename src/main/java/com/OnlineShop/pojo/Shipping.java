@@ -1,4 +1,4 @@
-package com.mmall.pojo;
+package com.OnlineShop.pojo;
 
 import java.util.Date;
 

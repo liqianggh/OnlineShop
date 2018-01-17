@@ -1,4 +1,4 @@
-package com.mmall.common;
+package com.OnlineShop.common;
 
 import com.google.common.collect.Sets;
 

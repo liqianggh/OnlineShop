@@ -1,6 +1,6 @@
 package com.mmall.test;
 
-import com.mmall.util.PropertiesUtil;
+import com.OnlineShop.util.PropertiesUtil;
 
 /**
  * Created by Administrator on 2017/12/24 0024.

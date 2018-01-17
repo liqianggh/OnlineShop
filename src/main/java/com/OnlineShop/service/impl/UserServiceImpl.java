@@ -1,12 +1,12 @@
-package com.mmall.service.impl;
+package com.OnlineShop.service.impl;
 
-import com.mmall.common.Const;
-import com.mmall.common.ServerResponse;
-import com.mmall.common.TockenCache;
-import com.mmall.dao.UserMapper;
-import com.mmall.pojo.User;
-import com.mmall.service.IUserService;
-import com.mmall.util.MD5Util;
+import com.OnlineShop.common.Const;
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.common.TockenCache;
+import com.OnlineShop.dao.UserMapper;
+import com.OnlineShop.pojo.User;
+import com.OnlineShop.service.IUserService;
+import com.OnlineShop.util.MD5Util;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

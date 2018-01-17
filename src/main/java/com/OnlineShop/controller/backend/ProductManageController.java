@@ -1,15 +1,15 @@
-package com.mmall.controller.backend;
+package com.OnlineShop.controller.backend;
 
 import com.google.common.collect.Maps;
-import com.mmall.common.Const;
-import com.mmall.common.ResponseCode;
-import com.mmall.common.ServerResponse;
-import com.mmall.pojo.Product;
-import com.mmall.pojo.User;
-import com.mmall.service.IFileService;
-import com.mmall.service.IProductService;
-import com.mmall.service.IUserService;
-import com.mmall.util.PropertiesUtil;
+import com.OnlineShop.common.Const;
+import com.OnlineShop.common.ResponseCode;
+import com.OnlineShop.common.ServerResponse;
+import com.OnlineShop.pojo.Product;
+import com.OnlineShop.pojo.User;
+import com.OnlineShop.service.IFileService;
+import com.OnlineShop.service.IProductService;
+import com.OnlineShop.service.IUserService;
+import com.OnlineShop.util.PropertiesUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

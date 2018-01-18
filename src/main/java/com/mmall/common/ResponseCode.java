@@ -1,8 +1,4 @@
 package com.mmall.common;
-
-/**
- * Created by Administrator on 2017/12/1 0001.
- */
 public enum ResponseCode {
 
     SUCCESS(0,"SUCCESS"),
@@ -12,7 +8,6 @@ public enum ResponseCode {
 
     private final int code;
     private final String desc;
-
     ResponseCode(int code,String desc){
         this.code=code;
         this.desc=desc;

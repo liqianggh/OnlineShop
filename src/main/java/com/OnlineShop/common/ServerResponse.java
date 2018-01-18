@@ -5,10 +5,10 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.io.Serializable;
 
-/**
- * 通用的类
- * Created by Administrator on 2017/12/1 0001.
- */
+  /**
+   * @Description:
+   * Created by Jann Lee on 2018/1/18  18:56.
+   */
 //保证序列化的时候空的数据不会序列化
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ServerResponse<T> implements Serializable{

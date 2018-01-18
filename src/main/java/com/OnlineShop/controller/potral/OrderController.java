@@ -10,8 +10,9 @@ import com.OnlineShop.common.ServerResponse;
 import com.OnlineShop.pojo.User;
 import com.OnlineShop.service.IOrderService;
 import com.OnlineShop.util.DateTimeUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.log;
+import org.slf4j.logFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +31,10 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/order/")
+@Slf4j
 public class OrderController {
 
-    private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
+//    private static final log log = logFactory.getlog(OrderController.class);
     @Autowired
     private IOrderService iOrderService;
 
@@ -40,7 +42,7 @@ public class OrderController {
     @RequestMapping(value = "create.do",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public ServerResponse create(HttpSession session, @RequestParam(value="shippingId") Integer shippingId) {
-logger.info("哈哈哈哈"+shippingId);
+log.info("哈哈哈哈"+shippingId);
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
@@ -141,7 +143,7 @@ logger.info("哈哈哈哈"+shippingId);
             }
             params.put(name,valueStr);
         }
-        logger.info("支付宝回调，sign{},trade_status:{},参数：{}",params.get("sign"),params.get("trade_status"),params.toString());
+        log.info("支付宝回调，sign{},trade_status:{},参数：{}",params.get("sign"),params.get("trade_status"),params.toString());
 
         //验证回调是否是支付宝发的,并且要避免重复通知
         params.remove("sign_type");
@@ -152,7 +154,7 @@ logger.info("哈哈哈哈"+shippingId);
             }
 
         } catch (AlipayApiException e) {
-            logger.error("支付宝验证异常：",e);
+            log.error("支付宝验证异常：",e);
         }
         //todo 验证支付宝返回的各种数据
         String tradeStatus = params.get("trade_status");

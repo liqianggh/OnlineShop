@@ -1,9 +1,8 @@
 package com.OnlineShop.util;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTPClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,9 +12,10 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/12/8 0008.
  */
+@Slf4j
 public class FTPUtil {
 
-    private static Logger logger = LoggerFactory.getLogger(FTPUtil.class);
+//    private static log log = logFactory.getlog(FTPUtil.class);
 
     private static String ftpIp = PropertiesUtil.getProperty("ftp.server.ip");
 
@@ -39,10 +39,10 @@ public class FTPUtil {
 
     public static boolean uploadFile(List<File> fileList) throws IOException {
         FTPUtil ftpUtil = new FTPUtil(ftpIp,21,ftpUser,ftpPass);
-        logger.info("开始连接服务器");
-        logger.info(fileList.size()+"哈哈哈");
+        log.info("开始连接服务器");
+        log.info(fileList.size()+"哈哈哈");
         boolean result = ftpUtil.uploadFile("img",fileList);
-        logger.info("开始链接ftp服务器，结束上传，上传结果{}",result);
+        log.info("开始链接ftp服务器，结束上传，上传结果{}",result);
         return result;
     }
 
@@ -67,18 +67,18 @@ public class FTPUtil {
                 ftpClient.enterLocalPassiveMode();
                 for(File fileItem : fileList){
                     fis = new FileInputStream(fileItem);
-                    logger.info(fileItem.getName()+" "+fis.getChannel());
+                    log.info(fileItem.getName()+" "+fis.getChannel());
                     //todo
                     ftpClient.enterLocalPassiveMode();
-                    logger.info("端口"+ftpClient.getPassivePort());
-                    logger.info(ftpClient.getPassiveHost());
-                    logger.info(String.valueOf(ftpClient.getRemoteAddress()));
-                    logger.info(String.valueOf(ftpClient.getRemotePort()));
+                    log.info("端口"+ftpClient.getPassivePort());
+                    log.info(ftpClient.getPassiveHost());
+                    log.info(String.valueOf(ftpClient.getRemoteAddress()));
+                    log.info(String.valueOf(ftpClient.getRemotePort()));
                     uploaded = ftpClient.storeFile(fileItem.getName(),fis);
 
                 }
             } catch (IOException e) {
-                logger.error("上传文件异常",e);
+                log.error("上传文件异常",e);
                 uploaded=false;
                 e.printStackTrace();
             }finally {
@@ -94,9 +94,9 @@ public class FTPUtil {
         try {
             ftpClient.connect(ip);
             isSuccess = ftpClient.login(user,password);
-            logger.info("连接文件服务器"+isSuccess);
+            log.info("连接文件服务器"+isSuccess);
         } catch (IOException e) {
-            logger.error("链接ftp服务器异常",e);
+            log.error("链接ftp服务器异常",e);
         }
         return isSuccess;
     }

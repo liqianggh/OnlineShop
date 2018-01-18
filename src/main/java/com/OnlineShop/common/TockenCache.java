@@ -3,17 +3,19 @@ package com.OnlineShop.common;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Administrator on 2017/12/1 0001.
+ * Created by Jann Lee on 2017/12/1 0001.
  */
+@Slf4j
 public class TockenCache {
 
-    private static Logger logger = LoggerFactory.getLogger(TockenCache.class);
+//    private static Logger logger = LoggerFactory.getLogger(TockenCache.class);
 
     //常量 前缀
     public static final String TOKEN_PREFIX="token_";
@@ -44,7 +46,7 @@ public class TockenCache {
                 return null;
             }
         }catch (Exception e){
-            logger.error("localCache get error",e);
+            log.error("localCache get error",e);
         }
         //todo
         return value;

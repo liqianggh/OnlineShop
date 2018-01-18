@@ -144,7 +144,7 @@ public class OrderServiceImpl implements IOrderService {
          */
         AlipayTradeService tradeService = new AlipayTradeServiceImpl.ClientBuilder().build();
 
-log.info("j"+builder.getNotifyUrl()+"j");
+        log.info("j"+builder.getNotifyUrl()+"j");
         // 调用tradePay方法获取当面付应答
         AlipayF2FPrecreateResult result = tradeService.tradePrecreate(builder);
 
@@ -155,7 +155,7 @@ log.info("j"+builder.getNotifyUrl()+"j");
                 AlipayTradePrecreateResponse response = result.getResponse();
                 dumpResponse(response);
                 //把二维码传入文件服务器
-log.info("上传文件11111");
+                log.info("上传文件11111");
                 File folder = new File(path);
                 if (!folder.exists()) {
                     folder.setWritable(true);
@@ -170,10 +170,10 @@ log.info("上传文件11111");
 
                 File targetFile = new File(path, qrFileName);
                 try {
-log.info(targetFile+"哈哈哈");
-log.info(path+"223333");
+                    log.info(targetFile+"哈哈哈");
+                    log.info(path+"223333");
                     FTPUtil.uploadFile(Lists.newArrayList(targetFile));
-log.info("上传文件22222");
+                    log.info("上传文件22222");
                 } catch (IOException e) {
                     log.error("上传二维码异常", e);
                     e.printStackTrace();
@@ -288,9 +288,9 @@ log.info("上传文件22222");
         int rowCount = orderItemMapper.batchInsert(orderItemList);
         //插入成功
         if(rowCount>0){
-              //修改库存
+            //修改库存
             this.reduceProductStock(orderItemList);
-              //清空购物车
+            //清空购物车
             this.cleanCart(cartList);
 
             //返回数据给前端
@@ -329,14 +329,14 @@ log.info("上传文件22222");
         }
         List<OrderItem> orderItemList = (List<OrderItem>) serverResponse.getData();
         List<OrderItemVo> orderItemVoList = Lists.newArrayList();
-         BigDecimal payment = new BigDecimal("0");
-         for(OrderItem orderItem:orderItemList){
-             payment=BigDecimalUtil.add(payment.doubleValue(),orderItem.getTotalPrice().doubleValue());
-             orderItemVoList.add(assembleOrderItemVo(orderItem));
-         }
-         orderProductVo.setProductTotalPrice(payment);
-         orderProductVo.setOrderItemVoList(orderItemVoList);
-         orderProductVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
+        BigDecimal payment = new BigDecimal("0");
+        for(OrderItem orderItem:orderItemList){
+            payment=BigDecimalUtil.add(payment.doubleValue(),orderItem.getTotalPrice().doubleValue());
+            orderItemVoList.add(assembleOrderItemVo(orderItem));
+        }
+        orderProductVo.setProductTotalPrice(payment);
+        orderProductVo.setOrderItemVoList(orderItemVoList);
+        orderProductVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
 
         return ServerResponse.createBySuccess(orderProductVo);
     }
@@ -439,7 +439,7 @@ log.info("上传文件22222");
                 orderItemList=orderItemMapper.getByOrderNo(order.getOrderNo());
 
             }else{
-              orderItemList=orderItemMapper.getByOrderNoUserId(order.getOrderNo(),userId);
+                orderItemList=orderItemMapper.getByOrderNoUserId(order.getOrderNo(),userId);
             }
             OrderVo orderVo = assembleOrderVo(order,orderItemList);
             orderVoList.add(orderVo);
@@ -473,7 +473,7 @@ log.info("上传文件22222");
         orderVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
         List<OrderItemVo> orderItemVoList = Lists.newArrayList();
         for(OrderItem orderItem : orderItemList){
-             orderItemVoList.add(assembleOrderItemVo(orderItem));
+            orderItemVoList.add(assembleOrderItemVo(orderItem));
         }
         orderVo.setOrderItemVoList(orderItemVoList);
         return orderVo;
@@ -517,9 +517,9 @@ log.info("上传文件22222");
     }
     //清空购物车
     private void cleanCart(List<Cart> cartList){
-            for(Cart cart:cartList){
-                cartMapper.deleteByPrimaryKey(cart.getId());
-            }
+        for(Cart cart:cartList){
+            cartMapper.deleteByPrimaryKey(cart.getId());
+        }
     }
 
     //组装数据

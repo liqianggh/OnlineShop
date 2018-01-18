@@ -14,8 +14,8 @@ import com.OnlineShop.vo.CartProductVo;
 import com.OnlineShop.vo.CartVo;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +26,8 @@ import java.util.List;
  * Created by Administrator on 2017/12/13 0013.
  */
 @Service("iCartService")
+@Slf4j
 public class CartServiceImpl implements ICartService {
-    private org.slf4j.Logger logger =   LoggerFactory.getLogger(CategoryServiceImpl.class);
 
     @Autowired
     private ProductMapper productMapper;
@@ -131,7 +131,7 @@ public class CartServiceImpl implements ICartService {
 
                 Product product = productMapper.selectByPrimaryKey(cartItem.getProductId());
                 //todo
-                logger.info("这是商品"+product);
+                log.info("这是商品"+product);
                 if(product!=null){
                     cartProductVo.setProductMainImage(product.getMainImage());
                     cartProductVo.setProductName(product.getName());
@@ -159,7 +159,7 @@ public class CartServiceImpl implements ICartService {
 
                     cartProductVo.setQuantity(buyLimitCount);
                     //todo
-                    logger.info(product.getPrice().doubleValue()+" 哈哈"+cartProductVo.getQuantity());
+                    log.info(product.getPrice().doubleValue()+" 哈哈"+cartProductVo.getQuantity());
                     //计算总价
                     cartProductVo.setProductTotalPrice(BigDecimalUtil.mul(product.getPrice().doubleValue(),cartProductVo.getQuantity()));
                     //设置是否已经被勾选
@@ -169,7 +169,7 @@ public class CartServiceImpl implements ICartService {
                 if(cartItem.getChecked()==Const.Cart.CHECKED){
                     //添加到购物车总价中
                     //todo
-                   logger.info("哈哈哈哈"+cartTotalPrice+" "+cartProductVo+" "+cartProductVo.getProductTotalPrice()+" ");
+                   log.info("哈哈哈哈"+cartTotalPrice+" "+cartProductVo+" "+cartProductVo.getProductTotalPrice()+" ");
                     cartTotalPrice = BigDecimalUtil.add(cartTotalPrice.doubleValue(),cartProductVo.getProductTotalPrice().doubleValue());
                 }
                 //添加到CartVo中的cartProductVoList中

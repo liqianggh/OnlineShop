@@ -30,7 +30,6 @@ public class FileServiceImpl  implements IFileService{
 
         //对名字进行重置
         String uploadFileName = UUID.randomUUID().toString()+"."+fileExtensionName;
-        log.info("开始上传文件，上传文件名:{},上传路径:{},新文件名{}",fileName,path,uploadFileName);
 
         File fileDir = new File(path);
         if(!fileDir.exists()){
@@ -46,7 +45,8 @@ public class FileServiceImpl  implements IFileService{
             //已经上传到服务器
 log.info("文件上传结果？？？"+result);
             //上传成功后删除本地文件
-            if(result){
+            if(result){        log.info("开始上传文件，上传文件名:{},上传路径:{},新文件名{}",fileName,path,uploadFileName);
+
                 targetFile.delete();
             }
         }catch (IOException e) {

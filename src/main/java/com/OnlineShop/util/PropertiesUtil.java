@@ -17,6 +17,7 @@ public class PropertiesUtil {
 
     static{
         String fileName= "mmall.properties";
+
         props = new Properties();
         try {
             props.load(new InputStreamReader(PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName),"UTF-8"));

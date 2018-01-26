@@ -16,7 +16,7 @@ public class PropertiesUtil {
     private static Properties props;
 
     static{
-        String fileName= "mmall.properties";
+        String fileName= "onlineShop.properties";
 
         props = new Properties();
         try {

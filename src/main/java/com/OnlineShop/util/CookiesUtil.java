@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class CookiesUtil {
 
-    private static final String COOKIE_DOMAIN=".onlineshop.com";
+//    private static final String COOKIE_DOMAIN=".onlineshop.com";
+private static final String COOKIE_DOMAIN="onlineshop.com";//tomcat8.5以后写法
     private static final String COOKIE_NAME="onlineshop_login_token";
 
     //读取cookie

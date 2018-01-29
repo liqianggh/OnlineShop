@@ -8,6 +8,7 @@ import com.OnlineShop.service.IUserService;
 import com.OnlineShop.util.CookiesUtil;
 import com.OnlineShop.util.JsonUtil;
 import com.OnlineShop.util.RedisPoolUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter;
 import org.springframework.stereotype.Controller;
@@ -57,13 +58,16 @@ public class UserController {
 
     /**
      * 退出登陆
-     * @param session
+     * @param session request
      * @return
      */
     @RequestMapping(value="logout.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> logout(HttpSession session){
-        session.removeAttribute(Const.CURRENT_USER);
+    public ServerResponse<String> logout( HttpServletRequest request,HttpServletResponse response){
+            String loginToken = CookiesUtil.readLoginToken(request);
+            CookiesUtil.delLoginToken(request,response);
+            RedisPoolUtil.del(loginToken);
+//        session.removeAttribute(Const.CURRENT_USER);
         return ServerResponse.createBySuccess();
     }
 
@@ -94,12 +98,17 @@ public class UserController {
 
     @RequestMapping(value="get_user_info.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> getUserInfo(HttpSession session){
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if(user!=null){
-            return ServerResponse.createBySuccess(user);
+    public ServerResponse<User> getUserInfo(HttpSession session,HttpServletRequest request){
+//        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        String loginToken =  CookiesUtil.readLoginToken(request);
+        if(StringUtils.isNotBlank(loginToken)){
+            return ServerResponse.createByErrorMessage("用户未登录，无法获取用户信息！");
+
         }
-        return ServerResponse.createByErrorMessage("用户未登录，无法获取用户信息！");
+        String userJson = RedisPoolUtil.get(loginToken);
+        User user  = JsonUtil.stringToObj(userJson,User.class);
+
+        return ServerResponse.createBySuccess(user);
     }
 
 

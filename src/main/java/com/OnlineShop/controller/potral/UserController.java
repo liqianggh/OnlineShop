@@ -46,8 +46,8 @@ public class UserController {
 //                RedisPoolUtil.setEx(Const.CURRENT_USER, JsonUtil.objToString(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
 
                 CookiesUtil.writeLoginToken(httpresponse,session.getId());
-                CookiesUtil.readLoginToken(httpServletRequest);
-                CookiesUtil.delLoginToken(httpServletRequest,httpresponse);
+//                CookiesUtil.readLoginToken(httpServletRequest);
+//                CookiesUtil.delLoginToken(httpServletRequest,httpresponse);
                 //sessionId存入redis
                 RedisPoolUtil.setEx(session.getId(),JsonUtil.objToString(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
 
@@ -92,7 +92,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value="getUserInfo.do",method = RequestMethod.POST)
+    @RequestMapping(value="get_user_info.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession session){
         User user = (User) session.getAttribute(Const.CURRENT_USER);

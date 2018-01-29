@@ -39,6 +39,7 @@ public class CookiesUtil {
         cookie.setPath("/");//设置在根目录
         //单位是秒 如果不设置，cookies不会写入硬盘 只在内存，即当前页面有效
         cookie.setMaxAge(60*60*24*365);//-1代表永久
+        cookie.setHttpOnly(true);//只能通过http请求
         log.info("write cookieName:{},cookieValue:{}",cookie.getName(),cookie.getValue());
         response.addCookie(cookie);
     }

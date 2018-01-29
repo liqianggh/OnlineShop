@@ -14,6 +14,12 @@ public class Const {
     public static final String STRING_EMAIL="email";
 
     public static  final String STRING_USERNAME="username";
+
+    public interface RedisCacheExtime{
+        int REDIS_SESSION_EXTIME=60*30;
+    }
+
+
     //代替枚举，由于枚举繁重
     public interface Role{
         int ROLE_CUSTOMER=0;

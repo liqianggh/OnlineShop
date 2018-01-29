@@ -5,21 +5,26 @@ import com.OnlineShop.common.ResponseCode;
 import com.OnlineShop.common.ServerResponse;
 import com.OnlineShop.pojo.User;
 import com.OnlineShop.service.IUserService;
+import com.OnlineShop.util.CookiesUtil;
+import com.OnlineShop.util.JsonUtil;
+import com.OnlineShop.util.RedisPoolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by Administrator on 2017/12/1 0001.
+ * Created by Administrator on 2018/1/5
  */
 @Controller
 @RequestMapping("/user/")
 public class UserController {
-
 
     //注入service iUserService和@Service中指定一致
     @Autowired
@@ -32,12 +37,21 @@ public class UserController {
      * @return
      */
     @RequestMapping(value="login.do",method = RequestMethod.POST)
-    @ResponseBody
-    public  ServerResponse<User> login(String username, String password, HttpSession session){
-        ServerResponse<User> response = iUserService.login(username,password);
-        if(response.isSuccess()){
-            session.setAttribute(Const.CURRENT_USER,response.getData());
-        }
+        @ResponseBody
+        public  ServerResponse<User> login(String username, String password, HttpSession session, HttpServletRequest httpServletRequest, HttpServletResponse httpresponse){
+            ServerResponse<User> response = iUserService.login(username,password);
+            if(response.isSuccess()){
+//            session.setAttribute(Const.CURRENT_USER,response.getData());
+                //user存入redis，设置过期时间为30分钟
+//                RedisPoolUtil.setEx(Const.CURRENT_USER, JsonUtil.objToString(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+
+                CookiesUtil.writeLoginToken(httpresponse,session.getId());
+                CookiesUtil.readLoginToken(httpServletRequest);
+                CookiesUtil.delLoginToken(httpServletRequest,httpresponse);
+                //sessionId存入redis
+                RedisPoolUtil.setEx(session.getId(),JsonUtil.objToString(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+
+            }
         return response;
     }
 
@@ -156,6 +170,7 @@ public class UserController {
         User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
         if(currentUser==null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"未登录需要强制登陆status=10");
+
         }
         return  iUserService.getInformation(currentUser.getId());
     }

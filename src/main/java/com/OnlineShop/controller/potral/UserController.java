@@ -101,7 +101,7 @@ public class UserController {
     public ServerResponse<User> getUserInfo(HttpSession session,HttpServletRequest request){
 //        User user = (User) session.getAttribute(Const.CURRENT_USER);
         String loginToken =  CookiesUtil.readLoginToken(request);
-        if(StringUtils.isNotBlank(loginToken)){
+        if(StringUtils.isBlank(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录，无法获取用户信息！");
 
         }

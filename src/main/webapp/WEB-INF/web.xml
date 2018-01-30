@@ -23,6 +23,15 @@
         <filter-name>characterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <!--重置session时间的filter-->
+    <filter>
+        <filter-name>sessionExpireFileter</filter-name>
+        <filter-class>com.OnlineShop.controller.common.SessionExpireFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>sessionExpireFileter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
 
 
     <!--web容器启动和关闭监听-->

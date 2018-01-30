@@ -1,5 +1,8 @@
 package com.OnlineShop.controller.potral;
 
+import com.OnlineShop.util.CookiesUtil;
+import com.OnlineShop.util.JsonUtil;
+import com.OnlineShop.util.RedisPoolUtil;
 import com.github.pagehelper.PageInfo;
 import com.OnlineShop.common.Const;
 import com.OnlineShop.common.ResponseCode;
@@ -7,12 +10,14 @@ import com.OnlineShop.common.ServerResponse;
 import com.OnlineShop.pojo.Shipping;
 import com.OnlineShop.pojo.User;
 import com.OnlineShop.service.IShippingService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -27,8 +32,16 @@ public class ShippingController {
 
     @RequestMapping("add.do")
     @ResponseBody
-    public ServerResponse add(HttpSession session, Shipping shipping) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse add(HttpServletRequest request, Shipping shipping) {
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -39,8 +52,16 @@ public class ShippingController {
 
     @RequestMapping("del.do")
     @ResponseBody
-    public ServerResponse del(HttpSession session, Integer shippingId) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse del(HttpServletRequest request, Integer shippingId) {
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -51,9 +72,16 @@ public class ShippingController {
 
     @RequestMapping("update.do")
     @ResponseBody
-    public ServerResponse update(HttpSession session, Shipping shipping) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
+    public ServerResponse update(HttpServletRequest request, Shipping shipping) {
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }        if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
 
@@ -62,9 +90,16 @@ public class ShippingController {
 
     @RequestMapping("select.do")
     @ResponseBody
-    public ServerResponse<Shipping> select(HttpSession session, Integer shippingId) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
+    public ServerResponse<Shipping> select(HttpServletRequest request, Integer shippingId) {
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }        if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iShippingService.select(user.getId(), shippingId);
@@ -81,11 +116,18 @@ public class ShippingController {
     @RequestMapping("list.do")
     @ResponseBody
     public ServerResponse<PageInfo> list(
-            HttpSession session,
+            HttpServletRequest request,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }        if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iShippingService.list(user.getId(),pageNum,pageSize);

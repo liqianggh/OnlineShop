@@ -1,5 +1,8 @@
 package com.OnlineShop.controller.potral;
 
+import com.OnlineShop.util.CookiesUtil;
+import com.OnlineShop.util.JsonUtil;
+import com.OnlineShop.util.RedisPoolUtil;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.demo.trade.config.Configs;
@@ -11,6 +14,7 @@ import com.OnlineShop.pojo.User;
 import com.OnlineShop.service.IOrderService;
 import com.OnlineShop.util.DateTimeUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,10 +43,17 @@ public class OrderController {
     //创建订单
     @RequestMapping(value = "create.do",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public ServerResponse create(HttpSession session, @RequestParam(value="shippingId") Integer shippingId) {
+    public ServerResponse create(HttpServletRequest request, @RequestParam(value="shippingId") Integer shippingId) {
 log.info("哈哈哈哈"+shippingId);
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }        if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         //返回给前端数据
@@ -52,9 +63,16 @@ log.info("哈哈哈哈"+shippingId);
     //取消订单
     @RequestMapping("cancel.do")
     @ResponseBody
-    public ServerResponse cancel(HttpSession session, Long orderNo  ) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
+    public ServerResponse cancel(HttpServletRequest request, Long orderNo  ) {
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }        if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iOrderService.cancel(user.getId(),orderNo);
@@ -62,9 +80,16 @@ log.info("哈哈哈哈"+shippingId);
     //获取商品（购物车中的）
     @RequestMapping("get_order_cart_product.do")
     @ResponseBody
-    public ServerResponse getOrderCartProduct(HttpSession session, Long orderNo  ) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
+    public ServerResponse getOrderCartProduct(HttpServletRequest request, Long orderNo  ) {
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }        if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iOrderService.getOrderCartProduct(user.getId());
@@ -74,9 +99,16 @@ log.info("哈哈哈哈"+shippingId);
     //订单详情
     @RequestMapping("detail.do")
     @ResponseBody
-    public ServerResponse detail(HttpSession session, Long orderNo  ) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
+    public ServerResponse detail(HttpServletRequest request, Long orderNo  ) {
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }        if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iOrderService.getOrderDetail(user.getId(),orderNo);
@@ -86,9 +118,16 @@ log.info("哈哈哈哈"+shippingId);
     //订单列表
     @RequestMapping("list.do")
     @ResponseBody
-    public ServerResponse list(HttpSession session , @RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value="pageSize" ,defaultValue = "10") int pageSize ) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
+    public ServerResponse list(HttpServletRequest request, @RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value="pageSize" ,defaultValue = "10") int pageSize ) {
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }        if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iOrderService.getOrderList(user.getId(),pageNum,pageSize);
@@ -114,9 +153,16 @@ log.info("哈哈哈哈"+shippingId);
 
     @RequestMapping("pay.do")
     @ResponseBody
-    public ServerResponse pay(HttpSession session, long orderNo, HttpServletRequest request) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
+    public ServerResponse pay( long orderNo, HttpServletRequest request) {
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }        if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         //获取servlet上下文路径
@@ -178,9 +224,16 @@ log.info("哈哈哈哈"+shippingId);
 
     @RequestMapping("query_order_pay_status.do")
     @ResponseBody
-    public ServerResponse<Boolean> queryOrderPayStatus(HttpSession session, long orderNo) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
+    public ServerResponse<Boolean> queryOrderPayStatus(HttpServletRequest request, long orderNo) {
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }        if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
 

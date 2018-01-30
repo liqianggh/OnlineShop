@@ -1,5 +1,8 @@
 package com.OnlineShop.controller.backend;
 
+import com.OnlineShop.util.CookiesUtil;
+import com.OnlineShop.util.JsonUtil;
+import com.OnlineShop.util.RedisPoolUtil;
 import com.google.common.collect.Maps;
 import com.OnlineShop.common.Const;
 import com.OnlineShop.common.ResponseCode;
@@ -42,17 +45,25 @@ public class ProductManageController {
 
     /**
      * 添加更新产品
-     *
-     * @param session
      * @param product
      * @return
      */
     @RequestMapping("save.do")
     @ResponseBody
-    public ServerResponse productSave(HttpSession session, Product product) {
+    public ServerResponse productSave(HttpServletRequest request, Product product) {
 
         //强制登陆
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+//        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+              user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }
+
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登陆管理员！");
         }
@@ -69,17 +80,24 @@ public class ProductManageController {
 
     /**
      * 设置商品的状态
-     *
-     * @param session
      * @param productId
      * @param status
      * @return
      */
     @RequestMapping("set_sale_status.do")
     @ResponseBody
-    public ServerResponse setSaleStatus(HttpSession session, Integer productId, Integer status) {
+    public ServerResponse setSaleStatus(HttpServletRequest request, Integer productId, Integer status) {
         //强制登陆
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+//        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登陆管理员！");
         }
@@ -95,15 +113,23 @@ public class ProductManageController {
     /**
      * 返回用户详细信息
      *
-     * @param session
      * @param productId
      * @return
      */
     @RequestMapping("detail.do")
     @ResponseBody
-    public ServerResponse getDetail(HttpSession session, Integer productId) {
+    public ServerResponse getDetail(HttpServletRequest request, Integer productId) {
         //强制登陆
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+//        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登陆管理员！");
         }
@@ -118,17 +144,22 @@ public class ProductManageController {
 
     /**
      * 获取商品列表
-     *
-     * @param session
      * @return
      */
     @RequestMapping("list.do")
     @ResponseBody
-    public ServerResponse getList(HttpSession session,
+    public ServerResponse getList(HttpServletRequest  request,
                                   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                   @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        //强制登陆
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登陆管理员！");
         }
@@ -143,18 +174,24 @@ public class ProductManageController {
     /**
      * 搜索
      *
-     * @param session
      * @return
      */
     @RequestMapping("search.do")
     @ResponseBody
-    public ServerResponse seachProduct(HttpSession session,
+    public ServerResponse seachProduct(HttpServletRequest request,
                                        String productName,
                                        Integer productId,
                                        @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                        @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        //强制登陆
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登陆管理员！");
         }
@@ -168,8 +205,15 @@ public class ProductManageController {
     @RequestMapping("upload.do")
     @ResponseBody
     public ServerResponse upload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
-        //强制登陆
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登陆管理员！");
         }
@@ -198,10 +242,17 @@ public class ProductManageController {
     //富文本上传文件
     @RequestMapping("richtext_img_upload.do")
     @ResponseBody
-    public Map richTextUpload(HttpSession session, HttpServletResponse response, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
+    public Map richTextUpload(HttpSession session,HttpServletResponse response, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
         Map resultMap = Maps.newHashMap();
-        //强制登陆
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user  = null;
+        String loginToken = CookiesUtil.readLoginToken(request);
+        if (StringUtils.isNotEmpty(loginToken)){
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+            user = JsonUtil.stringToObj(userJsonStr,User.class);
+            if(user!=null){
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            }
+        }
         if (user == null) {
             resultMap.put("success",false);
             resultMap.put("msg","请登录管理员");

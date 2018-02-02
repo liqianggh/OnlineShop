@@ -7,7 +7,7 @@ import com.OnlineShop.dao.UserMapper;
 import com.OnlineShop.pojo.User;
 import com.OnlineShop.service.IUserService;
 import com.OnlineShop.util.MD5Util;
-import com.OnlineShop.util.RedisPoolUtil;
+import com.OnlineShop.util.RedisShardedPoolUtil;
 import org.apache.commons.io.output.TaggedOutputStream;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,7 +121,7 @@ public class UserServiceImpl implements IUserService{
             String forgetToken = UUID.randomUUID().toString();
             //放到本地cache中
 //            TockenCache.setKey(TockenCache.TOKEN_PREFIX+username,forgetToken);
-            RedisPoolUtil.setEx(Const.TOKEN_PREFIX+username,forgetToken,60*60*12);
+            RedisShardedPoolUtil.setEx(Const.TOKEN_PREFIX+username,forgetToken,60*60*12);
             return ServerResponse.createBySuccess(forgetToken);
 
         }
@@ -141,7 +141,7 @@ public class UserServiceImpl implements IUserService{
         }
 
 //        String token = TockenCache.getKey(TockenCache.TOKEN_PREFIX+username);
-        String token = RedisPoolUtil.get(Const.TOKEN_PREFIX+username);
+        String token = RedisShardedPoolUtil.get(Const.TOKEN_PREFIX+username);
 
         if(StringUtils.isBlank(token)){
             return ServerResponse.createByErrorMessage("token无效或过期");

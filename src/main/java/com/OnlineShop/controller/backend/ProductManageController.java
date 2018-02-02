@@ -2,7 +2,7 @@ package com.OnlineShop.controller.backend;
 
 import com.OnlineShop.util.CookiesUtil;
 import com.OnlineShop.util.JsonUtil;
-import com.OnlineShop.util.RedisPoolUtil;
+import com.OnlineShop.util.RedisShardedPoolUtil;
 import com.google.common.collect.Maps;
 import com.OnlineShop.common.Const;
 import com.OnlineShop.common.ResponseCode;
@@ -57,10 +57,10 @@ public class ProductManageController {
         User user  = null;
         String loginToken = CookiesUtil.readLoginToken(request);
         if (StringUtils.isNotEmpty(loginToken)){
-            String userJsonStr = RedisPoolUtil.get(loginToken);
+            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
               user = JsonUtil.stringToObj(userJsonStr,User.class);
             if(user!=null){
-                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
             }
         }
 
@@ -92,10 +92,10 @@ public class ProductManageController {
         User user  = null;
         String loginToken = CookiesUtil.readLoginToken(request);
         if (StringUtils.isNotEmpty(loginToken)){
-            String userJsonStr = RedisPoolUtil.get(loginToken);
+            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
             user = JsonUtil.stringToObj(userJsonStr,User.class);
             if(user!=null){
-                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
             }
         }
         if (user == null) {
@@ -124,10 +124,10 @@ public class ProductManageController {
         User user  = null;
         String loginToken = CookiesUtil.readLoginToken(request);
         if (StringUtils.isNotEmpty(loginToken)){
-            String userJsonStr = RedisPoolUtil.get(loginToken);
+            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
             user = JsonUtil.stringToObj(userJsonStr,User.class);
             if(user!=null){
-                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
             }
         }
         if (user == null) {
@@ -154,10 +154,10 @@ public class ProductManageController {
         User user  = null;
         String loginToken = CookiesUtil.readLoginToken(request);
         if (StringUtils.isNotEmpty(loginToken)){
-            String userJsonStr = RedisPoolUtil.get(loginToken);
+            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
             user = JsonUtil.stringToObj(userJsonStr,User.class);
             if(user!=null){
-                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
             }
         }
         if (user == null) {
@@ -186,10 +186,10 @@ public class ProductManageController {
         User user  = null;
         String loginToken = CookiesUtil.readLoginToken(request);
         if (StringUtils.isNotEmpty(loginToken)){
-            String userJsonStr = RedisPoolUtil.get(loginToken);
+            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
             user = JsonUtil.stringToObj(userJsonStr,User.class);
             if(user!=null){
-                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
             }
         }
         if (user == null) {
@@ -208,10 +208,10 @@ public class ProductManageController {
         User user  = null;
         String loginToken = CookiesUtil.readLoginToken(request);
         if (StringUtils.isNotEmpty(loginToken)){
-            String userJsonStr = RedisPoolUtil.get(loginToken);
+            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
             user = JsonUtil.stringToObj(userJsonStr,User.class);
             if(user!=null){
-                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
             }
         }
         if (user == null) {
@@ -247,10 +247,10 @@ public class ProductManageController {
         User user  = null;
         String loginToken = CookiesUtil.readLoginToken(request);
         if (StringUtils.isNotEmpty(loginToken)){
-            String userJsonStr = RedisPoolUtil.get(loginToken);
+            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
             user = JsonUtil.stringToObj(userJsonStr,User.class);
             if(user!=null){
-                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
             }
         }
         if (user == null) {

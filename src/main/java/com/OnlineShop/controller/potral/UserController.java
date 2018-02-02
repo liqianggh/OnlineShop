@@ -7,10 +7,9 @@ import com.OnlineShop.pojo.User;
 import com.OnlineShop.service.IUserService;
 import com.OnlineShop.util.CookiesUtil;
 import com.OnlineShop.util.JsonUtil;
-import com.OnlineShop.util.RedisPoolUtil;
+import com.OnlineShop.util.RedisShardedPoolUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,13 +43,13 @@ public class UserController {
             if(response.isSuccess()){
 //            session.setAttribute(Const.CURRENT_USER,response.getData());
                 //user存入redis，设置过期时间为30分钟
-//                RedisPoolUtil.setEx(Const.CURRENT_USER, JsonUtil.objToString(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+//                RedisShardedPoolUtil.setEx(Const.CURRENT_USER, JsonUtil.objToString(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
 
                 CookiesUtil.writeLoginToken(httpresponse,session.getId());
 //                CookiesUtil.readLoginToken(httpServletRequest);
 //                CookiesUtil.delLoginToken(httpServletRequest,httpresponse);
                 //sessionId存入redis
-                RedisPoolUtil.setEx(session.getId(),JsonUtil.objToString(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                RedisShardedPoolUtil.setEx(session.getId(),JsonUtil.objToString(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
 
             }
         return response;
@@ -65,7 +64,7 @@ public class UserController {
     public ServerResponse<String> logout( HttpServletRequest request,HttpServletResponse response){
             String loginToken = CookiesUtil.readLoginToken(request);
             CookiesUtil.delLoginToken(request,response);
-            RedisPoolUtil.del(loginToken);
+            RedisShardedPoolUtil.del(loginToken);
 //        session.removeAttribute(Const.CURRENT_USER);
         return ServerResponse.createBySuccess();
     }
@@ -104,7 +103,7 @@ public class UserController {
             return ServerResponse.createByErrorMessage("用户未登录，无法获取用户信息！");
 
         }
-        String userJson = RedisPoolUtil.get(loginToken);
+        String userJson = RedisShardedPoolUtil.get(loginToken);
         User user  = JsonUtil.stringToObj(userJson,User.class);
 
         return ServerResponse.createBySuccess(user);
@@ -146,10 +145,10 @@ public class UserController {
         User user  = null;
         String loginToken = CookiesUtil.readLoginToken(request);
         if (StringUtils.isNotEmpty(loginToken)){
-            String userJsonStr = RedisPoolUtil.get(loginToken);
+            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
             user = JsonUtil.stringToObj(userJsonStr,User.class);
             if(user!=null){
-                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
             }
         }
         if(user==null){
@@ -168,10 +167,10 @@ public class UserController {
         User currentUser  = null;
         String loginToken = CookiesUtil.readLoginToken(request);
         if (StringUtils.isNotEmpty(loginToken)){
-            String userJsonStr = RedisPoolUtil.get(loginToken);
+            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
             currentUser = JsonUtil.stringToObj(userJsonStr,User.class);
             if(currentUser!=null){
-                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
             }
         }
         if(currentUser==null){
@@ -184,7 +183,7 @@ public class UserController {
         if(response.isSuccess()){
 //             session.setAttribute(Const.CURRENT_USER,response.getData());
              String userStr = JsonUtil.objToString(user);
-             RedisPoolUtil.setEx(loginToken,userStr,Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+             RedisShardedPoolUtil.setEx(loginToken,userStr,Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
 
         }
 
@@ -197,10 +196,10 @@ public class UserController {
         User user  = null;
         String loginToken = CookiesUtil.readLoginToken(request);
         if (StringUtils.isNotEmpty(loginToken)){
-            String userJsonStr = RedisPoolUtil.get(loginToken);
+            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
             user = JsonUtil.stringToObj(userJsonStr,User.class);
             if(user!=null){
-                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
             }
         }         if(user==null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"未登录需要强制登陆status=10");

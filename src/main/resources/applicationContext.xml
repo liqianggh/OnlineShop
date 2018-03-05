@@ -16,5 +16,5 @@
 
 
 <import resource="applicationContext-datasource.xml"/>
-
-        </beans>
+<import resource="applicationContext-spring-session.xml"/>
+</beans>

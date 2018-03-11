@@ -33,10 +33,13 @@ public class UserSpringSessionController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "login.do", method = RequestMethod.POST)
+    @RequestMapping(value = "login.do", method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public ServerResponse<User> login(String username, String password, HttpSession session, HttpServletRequest httpServletRequest, HttpServletResponse httpresponse) {
+        int i = 0;
+        int j = 10/i;
         ServerResponse<User> response = iUserService.login(username, password);
+
         if (response.isSuccess()) {
             session.setAttribute(Const.CURRENT_USER, response.getData());
 

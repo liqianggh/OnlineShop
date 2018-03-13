@@ -42,7 +42,8 @@
     </bean>
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/manage/**"/>
+            <mvc:mapping path="/manage/**"/><!--拦截该路径和其子路径下的所有请求-->
+            <mvc:exclude-mapping path="/manage/user/login.do"/><!--放行特定的请求，也可以在拦截器代码进行校验放行-->
             <bean class="com.OnlineShop.common.interceptor.AuthorityInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

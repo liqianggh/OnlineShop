@@ -243,7 +243,7 @@ public class ProductManageController {
     @RequestMapping("richtext_img_upload.do")
     @ResponseBody
     public Map richTextUpload(HttpSession session,HttpServletResponse response, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
-        Map resultMap = Maps.newHashMap();
+       /* Map resultMap = Maps.newHashMap();
         User user  = null;
         String loginToken = CookiesUtil.readLoginToken(request);
         if (StringUtils.isNotEmpty(loginToken)){
@@ -279,8 +279,24 @@ public class ProductManageController {
         } else {
             resultMap.put("success",false);
             resultMap.put("msg","无权限操作");
-            return resultMap;        }
+            return resultMap;
+        }*/
+        Map resultMap = Maps.newHashMap();
+        String path = this.getClass().getResource("/").getPath();
+        ServletContext context = session.getServletContext();
+        String targetFileName = iFileService.upload(file, path);
 
+        if(StringUtils.isBlank(targetFileName)){
+            resultMap.put("success",false);
+            resultMap.put("msg","上传失败");
+            return resultMap;
+        }
+        String url = PropertiesUtil.getProperty("ftp.server.http.prefix") + targetFileName;
+        resultMap.put("success",true);
+        resultMap.put("msg","上传成功");
+        resultMap.put("file_path",url);
+        response.addHeader("Access-Control-Allow-Headers","X-File_Name");
+        return resultMap;
     }
 
 

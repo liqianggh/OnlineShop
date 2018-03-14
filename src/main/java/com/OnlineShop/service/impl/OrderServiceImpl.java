@@ -29,8 +29,10 @@ import com.OnlineShop.vo.OrderItemVo;
 import com.OnlineShop.vo.OrderProductVo;
 import com.OnlineShop.vo.OrderVo;
 import com.OnlineShop.vo.ShippingVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,7 @@ import java.util.*;
  * Created by Administrator on 2017/12/22 0022.
  */
 @Service("iOrderService")
+@Slf4j
 public class OrderServiceImpl implements IOrderService {
 
 
@@ -61,7 +64,7 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private ShippingMapper shippingMapper;
 
-    private static Log log = LogFactory.getLog(OrderServiceImpl.class);
+//    private static Log log = LogFactory.getLog(OrderServiceImpl.class);
 
 
     public ServerResponse pay(Long orderNo, Integer userId, String path) {
@@ -426,6 +429,29 @@ public class OrderServiceImpl implements IOrderService {
         }
         return ServerResponse.createByErrorMessage("订单不存在！");
 
+    }
+
+    @Override
+    public void closeOrder(int hour) {
+        Date closeDateTime = DateUtils.addHours(new Date(),-hour);
+        List<Order> orderList = orderMapper.selectOrderStatusByCreateTime(Const.OrderStatusEnum.NO_PAY.getCode(),DateTimeUtil.dateToStr(closeDateTime));
+        for(Order order:orderList){
+            List<OrderItem> orderItemList = orderItemMapper.getByOrderNo(order.getOrderNo());
+            for(OrderItem orderItem:orderItemList){
+                //一定要用主键作为where条件 防止锁表 InnoDB引擎
+                Integer stock = productMapper.selectStockByProductId(orderItem.getProductId());
+                if(stock==null){
+                    continue;//如果商品已经下架或删除
+                }
+                Product product = new Product();
+                product.setId(orderItem.getProductId());
+                product.setStock(stock+orderItem.getQuantity());
+                productMapper.updateByPrimaryKeySelective(product);
+            }
+            orderMapper.closeOrderByOrderId(order.getId());
+            log.info("关闭订单OrderNo:{}",order.getOrderNo());
+
+        }
     }
 
 

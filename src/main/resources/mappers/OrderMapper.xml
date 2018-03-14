@@ -225,4 +225,22 @@
     from mmall_order
     order by create_time desc
   </select>
+
+  <!--关闭订-->
+<select id="selectOrderStatusByCreateTime" parameterType="map" resultMap="BaseResultMap">
+  select
+  <include refid="Base_Column_List"/>
+  from mmall_order
+  where status = #{status}
+  <![CDATA[
+  and create_time <=#{date}
+  ]]>
+  order by create_time desc
+</select>
+
+  <update id="closeOrderByOrderId" parameterType="int">
+    update mmall_order
+    set status = 0
+    where id = #{id}
+  </update>
 </mapper>

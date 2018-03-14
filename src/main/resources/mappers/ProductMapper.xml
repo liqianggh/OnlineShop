@@ -212,5 +212,11 @@
       </foreach>
     </if>
   </select>
+  <!--使用悲观锁-->
+  <select id="selectStockByProductId" parameterType="int" resultType="INTEGER">
+    select stock from mmall_product
+    where id=#{id}
+    for UPDATE
+  </select>
 
 </mapper>
